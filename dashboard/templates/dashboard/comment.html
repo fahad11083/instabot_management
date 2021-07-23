@@ -1,0 +1,26 @@
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group row">
+        <label for="picture_link" class="col-sm-2 col-form-label">Insert Picture Link:</label>
+        <div class="col-sm-10">
+            <input type="text" name="picture_link" class="form-control" placeholder="Insert URL">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="comment_message" class="col-sm-2 col-form-label">Comment Message:</label>
+        <div class="col-sm-10">
+            <input type="text" name="comment_message" class="form-control" placeholder="Enter Message">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="number_of_users" class="col-sm-2 col-form-label">Enter Number Of users for Commenting</label>
+        <div class="col-sm-10">
+            <input type="number" name="number_of_users" class="form-control" placeholder="Enter Number of User">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</form>

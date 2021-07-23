@@ -1,12 +1,3 @@
-{% if accounts %}
-    <form action="{% url 'automation:create'%}" method="post">
-        {% csrf_token %}
-        <fieldset>
-            <input type="radio" name="likes" value="TEST">
-            <label>TEST</label>
-        </fieldset>
-        <input type="submit" value="Automation">
-    </form>
-{% else %}
-    <h1>No Accounts Available</h1>
-{% endif %}
+<a href="{% url 'dashboard:likes' %}">BUY LIKES</a>
+<a href="{% url 'dashboard:comments' %}">BUY COMMENTS</a>
+<a href="{% url 'dashboard:followers' %}">BUY FOLLOWERS</a>
