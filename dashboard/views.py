@@ -1,4 +1,5 @@
 from django import template
+from django.forms.forms import Form
 from django.http.response import Http404
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
@@ -7,14 +8,14 @@ from automation.models import *
 from django.views import generic
 from django.views.generic.edit import FormView
 from dashboard.forms import AccountForm, LikeForm, CommentForm, FollowerForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-class IndexView(generic.ListView):
-    template_name = 'dashboard/index.html'
-    context_object_name = 'accounts'
-
-    def get_queryset(self):
-        return Account.objects.all()
+@login_required
+def index_view(request):
+    current_user = request.user
+    print('current_user', current_user.id)
+    return render(request, 'dashboard/index.html')
 
 
 class LikeFormView(FormView):
@@ -23,9 +24,8 @@ class LikeFormView(FormView):
     success_url = '/dashboard/'
 
     def form_valid(self, form):
-        form.save_form()
+        form.save_form(self.request.user.id)
         return super().form_valid(form)
-
 
 class CommentFormView(FormView):
     template_name = 'dashboard/comment.html'
@@ -33,7 +33,7 @@ class CommentFormView(FormView):
     success_url = '/dashboard/'
 
     def form_valid(self, form):
-        form.save_form()
+        form.save_form(self.request.user.id)
         return super().form_valid(form)
 
 
@@ -43,7 +43,7 @@ class FollowerFormView(FormView):
     success_url = '/dashboard/'
 
     def form_valid(self, form):
-        form.save_form()
+        form.save_form(self.request.user.id)
         return super().form_valid(form)
 
 
