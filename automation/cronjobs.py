@@ -1,6 +1,7 @@
 from automation.models import *
 from selenium import webdriver
 import time
+from webdriver_manager.chrome import ChromeDriverManager
 
 def automate_like_service():
     orders = Order.objects.filter(completed=False)
@@ -43,8 +44,11 @@ def sign_in(credential):
     PROXY = "5.79.66.2:13010"
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--proxy-server=%s' % PROXY)
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument("user-agent=Mozilla/5.0 (Linux; Android 11; SM-A202F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.93 Mobile Safari/537.36")
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(ChromeDriverManager().install(),options=chrome_options)
     driver.get("https://www.instagram.com/accounts/login/")
     time.sleep(5)
     driver.find_element_by_name("username").send_keys(credential.email)
