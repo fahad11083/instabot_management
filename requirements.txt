@@ -56,8 +56,6 @@ curtsies==0.3.4
 dagit==0.11.13
 dagster==0.11.13
 dagster-graphql==0.11.13
--e git+git@github.com:qbatch/dagster-matching-service.git@ff0b82bf72552ea06d1564d6a2db7a718022c7a5#egg=dagster_matching_service
-dataclasses==0.7
 decorator==5.0.9
 defusedxml==0.6.0
 dill==0.3.3
