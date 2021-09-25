@@ -1,7 +1,7 @@
 from automation.models import *
 from selenium import webdriver
-import time
 from webdriver_manager.chrome import ChromeDriverManager
+import codecs, os, time
 
 def automate_like_service():
     orders = Order.objects.filter(completed=False)
@@ -35,9 +35,12 @@ def comment_service(number_of_comments, picture_link, comment_message):
 def follower_service(number_of_followers, account_link):
     credentials = Account.objects.all()[:number_of_followers]
     for credential in credentials:
-        driver = sign_in(credential)
-        follow_user(driver, account_link)
-        driver.close()
+        try:
+            driver = sign_in(credential)
+            follow_user(driver, account_link)
+            driver.close()
+        except Exception as e:
+            print(e)
 
 
 def sign_in(credential):
@@ -48,18 +51,38 @@ def sign_in(credential):
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument("user-agent=Mozilla/5.0 (Linux; Android 11; SM-A202F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.93 Mobile Safari/537.36")
-    driver = webdriver.Chrome(ChromeDriverManager().install(),options=chrome_options)
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     driver.get("https://www.instagram.com/accounts/login/")
     time.sleep(5)
     driver.find_element_by_name("username").send_keys(credential.email)
     driver.find_element_by_name("password").send_keys(credential.password)
     driver.find_element_by_xpath("//div[contains(text(), 'Log In')]").click()
+    #driver.save_screenshot('screenie.png')
+    #pageSource = driver.page_source
     time.sleep(10)
-    saved_info = driver.find_element_by_xpath("//button[contains(text(), 'Not')]")
-    if saved_info: saved_info.click()
+    try:
+        saved_info = driver.find_element_by_xpath("//button[contains(text(), 'Not')]")
+        if saved_info: saved_info.click()
+    except:
+        pageSource = driver.page_source
+        print(pageSource)
+        n = os.path.join("/home/ubuntu/apps/instabot_management","page_not.html")
+        file = codecs.open(n, "w", "utf−8")
+        h = driver.page_source
+        file.write(h)
+        print("No selector Found //button[contains(text(), 'Not')]")
     time.sleep(7)
-    add_home_screen = driver.find_element_by_xpath("//button[contains(text(), 'Cancel')]")
-    if add_home_screen: add_home_screen.click()
+    try:
+        add_home_screen = driver.find_element_by_xpath("//button[contains(text(), 'Cancel')]")
+        if add_home_screen: add_home_screen.click()
+    except:
+        pageSource = driver.page_source
+        print(pageSource)
+        n = os.path.join("/home/ubuntu/apps/instabot_management","page_not.html")
+        file = codecs.open(n, "w", "utf−8")
+        h = driver.page_source
+        file.write(h)
+        print("No selector Found //button[contains(text(), 'Cancel')]")
     time.sleep(5)
     return driver
 
@@ -78,6 +101,7 @@ def follow_user(driver, url):
     follow_button = driver.find_elements_by_xpath("//button[contains(text(), 'Follow')]")[0]
     follow_button.click()
     time.sleep(5)
+    print("successfully Followed")
     driver.close()
 
 
