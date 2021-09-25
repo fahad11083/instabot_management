@@ -66,7 +66,7 @@ def sign_in(credential):
     except:
         pageSource = driver.page_source
         print(pageSource)
-        n = os.path.join("/home/ubuntu/apps/instabot_management","page_not.html")
+        n = os.path.join("/home/ubuntu/apps/instabot_management",f"page_not-{credential.id}.html")
         file = codecs.open(n, "w", "utf−8")
         h = driver.page_source
         file.write(h)
@@ -78,7 +78,7 @@ def sign_in(credential):
     except:
         pageSource = driver.page_source
         print(pageSource)
-        n = os.path.join("/home/ubuntu/apps/instabot_management","page_not.html")
+        n = os.path.join("/home/ubuntu/apps/instabot_management",f"page_cancel-{credential.id}.html")
         file = codecs.open(n, "w", "utf−8")
         h = driver.page_source
         file.write(h)
