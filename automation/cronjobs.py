@@ -1,7 +1,7 @@
 from automation.models import *
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
-import codecs, os, time
+import codecs, os, time, datetime
 
 def automate_like_service():
     orders = Order.objects.filter(completed=False)
@@ -20,7 +20,7 @@ def like_service(amount_of_likes, url):
     credentials = Account.objects.all()[:amount_of_likes]
     for credential in credentials:
         driver = sign_in(credential)
-        like_image(driver, url)
+        like_image(driver, url, credential.id)
         driver.close()
 
 
@@ -28,7 +28,7 @@ def comment_service(number_of_comments, picture_link, comment_message):
     credentials = Account.objects.all()[:number_of_comments]
     for credential in credentials:
         driver = sign_in(credential)
-        comment_picture(driver, picture_link, comment_message)
+        comment_picture(driver, picture_link, comment_message, credential.id)
         driver.close()
 
 
@@ -37,7 +37,7 @@ def follower_service(number_of_followers, account_link):
     for credential in credentials:
         try:
             driver = sign_in(credential)
-            follow_user(driver, account_link)
+            follow_user(driver, account_link, credential.id)
             driver.close()
         except Exception as e:
             print(e)
@@ -57,9 +57,8 @@ def sign_in(credential):
     driver.find_element_by_name("username").send_keys(credential.email)
     driver.find_element_by_name("password").send_keys(credential.password)
     driver.find_element_by_xpath("//div[contains(text(), 'Log In')]").click()
-    #driver.save_screenshot('screenie.png')
-    #pageSource = driver.page_source
     time.sleep(10)
+    driver.save_screenshot(f"screenshot-{credential.id}-{datetime.datetime.now()}.png")
     try:
         saved_info = driver.find_element_by_xpath("//button[contains(text(), 'Not')]")
         if saved_info: saved_info.click()
@@ -78,40 +77,47 @@ def sign_in(credential):
     except:
         pageSource = driver.page_source
         print(pageSource)
-        n = os.path.join("/home/ubuntu/apps/instabot_management",f"page_cancel-{credential.id}.html")
+        n = os.path.join("/home/ubuntu/apps/instabot_management/screenshots",f"page_cancel-{credential.id}.html")
         file = codecs.open(n, "w", "utf−8")
         h = driver.page_source
         file.write(h)
         print("No selector Found //button[contains(text(), 'Cancel')]")
     time.sleep(5)
+    driver.save_screenshot(f"screenshot-{credential.id}-{datetime.datetime.now()}.png")
     return driver
 
 
-def like_image(driver, url="https://www.instagram.com/p/CSTcI7gIoN2/"):
+def like_image(driver, url="https://www.instagram.com/p/CSTcI7gIoN2/", account_id=None):
     driver.get(url)
     time.sleep(5)
+    driver.save_screenshot(f"screenshot-{account_id}-{datetime.datetime.now()}.png")
     driver.find_element_by_xpath("//button[@type='button']//span//*[name()='svg' and @aria-label='Like' and @height='24']").click()
     time.sleep(5)
+    driver.save_screenshot(f"screenshot-{account_id}-{datetime.datetime.now()}.png")
     driver.close()
 
 
-def follow_user(driver, url):
+def follow_user(driver, url, account_id=None):
     driver.get(url)
     time.sleep(5)
     follow_button = driver.find_elements_by_xpath("//button[contains(text(), 'Follow')]")[0]
+    driver.save_screenshot(f"screenshot-{account_id}-{datetime.datetime.now()}.png")
     follow_button.click()
     time.sleep(5)
+    driver.save_screenshot(f"screenshot-{account_id}-{datetime.datetime.now()}.png")
     print("successfully Followed")
     driver.close()
 
 
-def comment_picture(driver, url, message):
+def comment_picture(driver, url, message, account_id=None):
     driver.get(url)
     time.sleep(5)
+    driver.save_screenshot(f"screenshot-{account_id}-{datetime.datetime.now()}.png")
     driver.find_element_by_xpath("//button[@type='button']//div//*[name()='svg' and @aria-label='Comment' and @height='24']").click()
     time.sleep(5)
     driver.find_element_by_xpath("//textarea[contains(@aria-label, 'Add a comment')]").send_keys(message)
     time.sleep(2)
     driver.find_element_by_xpath("//button[contains(text(), 'Post')]").click()
     time.sleep(5)
+    driver.save_screenshot(f"screenshot-{account_id}-{datetime.datetime.now()}.png")
     driver.close()
