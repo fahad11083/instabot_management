@@ -1,3 +1,6 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/base.css' %}">
+
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group row">

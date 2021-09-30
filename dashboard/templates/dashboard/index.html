@@ -1,3 +1,9 @@
-<a href="{% url 'dashboard:likes' %}">BUY LIKES</a>
-<a href="{% url 'dashboard:comments' %}">BUY COMMENTS</a>
-<a href="{% url 'dashboard:followers' %}">BUY FOLLOWERS</a>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/base.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/styles.css' %}">
+
+<div class="url-containers">
+  <a href="{% url 'dashboard:likes' %}">BUY LIKES</a>
+  <a href="{% url 'dashboard:comments' %}">BUY COMMENTS</a>
+  <a href="{% url 'dashboard:followers' %}">BUY FOLLOWERS</a>
+</div>

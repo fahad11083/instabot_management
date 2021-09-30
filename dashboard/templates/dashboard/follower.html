@@ -1,20 +1,26 @@
-<form method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  <div class="form-group row">
-      <label for="account_link" class="col-sm-2 col-form-label">Insert Account Link:</label>
-      <div class="col-sm-10">
-          <input type="text" name="account_link" class="form-control" placeholder="Insert URL">
-      </div>
-  </div>
-  <div class="form-group row">
-      <label for="number_of_followers" class="col-sm-2 col-form-label">Number of followers:</label>
-      <div class="col-sm-10">
-          <input type="number" name="number_of_followers" class="form-control" placeholder="Enter Number of followers">
-      </div>
-  </div>
-  <div class="form-group row">
-      <div class="col-sm-10 offset-sm-2">
-          <button type="submit" class="btn btn-success">Submit</button>
-      </div>
-  </div>
-</form>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/base.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/form.css' %}">
+
+<div class="form-container">
+    <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group row">
+        <label for="account_link" class="col-sm-2 col-form-label">Insert Account Link:</label>
+        <div class="col-sm-10">
+            <input type="text" name="account_link" class="form-control" placeholder="Insert URL">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="number_of_followers" class="col-sm-2 col-form-label">Number of followers:</label>
+        <div class="col-sm-10">
+            <input type="number" name="number_of_followers" class="form-control" placeholder="Enter Number of followers">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+    </form>
+</div>
