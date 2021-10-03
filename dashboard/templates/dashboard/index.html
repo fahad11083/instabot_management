@@ -2,6 +2,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/base.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/styles.css' %}">
 
+{% block logout %}
+  {% include 'dashboard/logout.html' %}
+{% endblock %}
 <div class="url-containers">
   <a href="{% url 'dashboard:likes' %}">BUY LIKES</a>
   <a href="{% url 'dashboard:comments' %}">BUY COMMENTS</a>

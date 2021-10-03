@@ -1,11 +1,14 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/base.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/form.css' %}">
 
 {% block title %}Login{% endblock %}
 {% block content %}
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
+<div class="form-container">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+</div>
 {% endblock %}

@@ -22,5 +22,5 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('automation/', include('automation.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/login/', auth_views.LoginView.as_view()),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
