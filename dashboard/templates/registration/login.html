@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/base.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/form.css' %}">
@@ -8,7 +9,7 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Login</button>
+        <button type="submit" class="btn btn-success">Login</button>
     </form>
 </div>
 {% endblock %}
