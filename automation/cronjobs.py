@@ -98,15 +98,18 @@ def like_image(driver, url="https://www.instagram.com/p/CSTcI7gIoN2/", account_i
 
 
 def follow_user(driver, url, account_id=None):
-    driver.get(url)
-    time.sleep(5)
-    follow_button = driver.find_elements_by_xpath("//button[contains(text(), 'Follow')]")[0]
-    driver.save_screenshot(f"screenshots/screenshot-{account_id}-{datetime.datetime.now()}.png")
-    follow_button.click()
-    time.sleep(5)
-    driver.save_screenshot(f"screenshots/screenshot-{account_id}-{datetime.datetime.now()}.png")
-    print("successfully Followed")
-    driver.close()
+    try:
+        driver.get(url)
+        time.sleep(5)
+        follow_button = driver.find_elements_by_xpath("//button[contains(text(), 'Follow')]")[0]
+        driver.save_screenshot(f"screenshots/screenshot-{account_id}-{datetime.datetime.now()}.png")
+        follow_button.click()
+        time.sleep(5)
+        driver.save_screenshot(f"screenshots/screenshot-{account_id}-{datetime.datetime.now()}.png")
+        print("successfully Followed")
+        driver.close()
+    except:
+        save_page(driver, account_id)
 
 
 def comment_picture(driver, url, message, account_id=None):
@@ -121,3 +124,12 @@ def comment_picture(driver, url, message, account_id=None):
     time.sleep(5)
     driver.save_screenshot(f"screenshots/screenshot-{account_id}-{datetime.datetime.now()}.png")
     driver.close()
+
+
+def save_page(driver, id):
+    pageSource = driver.page_source
+    print(pageSource)
+    n = os.path.join("/home/ubuntu/apps/instabot_management/screenshots",f"page_cancel-{id}.html")
+    file = codecs.open(n, "w", "utf−8")
+    h = driver.page_source
+    file.write(h)
