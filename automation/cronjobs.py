@@ -108,8 +108,8 @@ def follow_user(driver, url, account_id=None):
         driver.save_screenshot(f"screenshots/screenshot-{account_id}-{datetime.datetime.now()}.png")
         print("successfully Followed")
         driver.close()
-    except:
-        save_page(driver, account_id)
+    except Exception as e:
+        save_page(driver, account_id, e)
 
 
 def comment_picture(driver, url, message, account_id=None):
@@ -126,10 +126,10 @@ def comment_picture(driver, url, message, account_id=None):
     driver.close()
 
 
-def save_page(driver, id):
+def save_page(driver, id, e):
     pageSource = driver.page_source
     print(pageSource)
-    n = os.path.join("/home/ubuntu/apps/instabot_management/screenshots",f"page_cancel-{id}.html")
+    n = os.path.join("/home/ubuntu/apps/instabot_management/screenshots", f"page_{e}-{id}.html")
     file = codecs.open(n, "w", "utf−8")
     h = driver.page_source
     file.write(h)
