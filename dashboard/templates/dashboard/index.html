@@ -5,6 +5,8 @@
 {% block logout %}
   {% include 'dashboard/logout.html' %}
 {% endblock %}
+
+Hello, {{ user.username | default:'Guest' }}!
 <div class="url-containers">
   <a href="{% url 'dashboard:likes' %}">BUY LIKES</a>
   <a href="{% url 'dashboard:comments' %}">BUY COMMENTS</a>

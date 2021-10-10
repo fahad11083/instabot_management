@@ -12,7 +12,6 @@ from django.urls import reverse
 import pdb
 
 # Create your views here.
-@login_required
 def index_view(request):
     current_user = request.user
     print('current_user', current_user.id)
