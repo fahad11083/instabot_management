@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/base.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/form.css' %}">
+
+{% block content %}
+<h2>Register</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Register">
+</form>
+
+<a href="{% url 'login' %}">Back to login</a>
+{% endblock %}

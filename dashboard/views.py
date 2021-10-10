@@ -1,14 +1,15 @@
-from django import template
-from django.forms.forms import Form
-from django.http.response import Http404
-from django.shortcuts import render, get_object_or_404
-from django.template import loader
-from django.http import HttpResponse
+from django.shortcuts import render
 from automation.models import *
 from django.views import generic
 from django.views.generic.edit import FormView
+import dashboard
 from dashboard.forms import AccountForm, LikeForm, CommentForm, FollowerForm
 from django.contrib.auth.decorators import login_required
+from .forms import CustomUserCreationForm
+from django.contrib.auth import login
+from django.shortcuts import  render, redirect
+from django.urls import reverse
+import pdb
 
 # Create your views here.
 @login_required
@@ -60,4 +61,18 @@ class AccountFormView(FormView):
     def form_valid(self, form):
         form.save_form()
         return super().form_valid(form)
+
+
+def register(request):
+    if request.method == "GET":
+        return render(
+            request, "registration/register.html",
+            {"form": CustomUserCreationForm}
+        )
+    elif request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("dashboard:index")
 

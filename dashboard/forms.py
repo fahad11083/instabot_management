@@ -1,5 +1,7 @@
 from django import forms
 from automation.models import *
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class AccountForm(forms.Form):
     user_name = forms.CharField()
@@ -40,3 +42,8 @@ class FollowerForm(forms.Form):
         if self.cleaned_data['account_link'] and self.cleaned_data['number_of_followers']:
             Order.objects.create(user_id=user_id, follower_service_purchased=True, account_link=self.cleaned_data['account_link'], number_of_followers=self.cleaned_data['number_of_followers'])
             print(self.cleaned_data['account_link'], self.cleaned_data['number_of_followers'])
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        fields = UserCreationForm.Meta.fields + ("email",)
