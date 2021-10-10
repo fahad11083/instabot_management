@@ -101,10 +101,10 @@ def follow_user(driver, url, account_id=None):
     driver.get(url)
     time.sleep(5)
     follow_button = driver.find_elements_by_xpath("//button[contains(text(), 'Follow')]")[0]
-    driver.save_screenshot(f"screenshot-{account_id}-{datetime.datetime.now()}.png")
+    driver.save_screenshot(f"screenshots/screenshot-{account_id}-{datetime.datetime.now()}.png")
     follow_button.click()
     time.sleep(5)
-    driver.save_screenshot(f"screenshot-{account_id}-{datetime.datetime.now()}.png")
+    driver.save_screenshot(f"screenshots/screenshot-{account_id}-{datetime.datetime.now()}.png")
     print("successfully Followed")
     driver.close()
 
@@ -112,12 +112,12 @@ def follow_user(driver, url, account_id=None):
 def comment_picture(driver, url, message, account_id=None):
     driver.get(url)
     time.sleep(5)
-    driver.save_screenshot(f"screenshot-{account_id}-{datetime.datetime.now()}.png")
+    driver.save_screenshot(f"screenshots/screenshot-{account_id}-{datetime.datetime.now()}.png")
     driver.find_element_by_xpath("//button[@type='button']//div//*[name()='svg' and @aria-label='Comment' and @height='24']").click()
     time.sleep(5)
     driver.find_element_by_xpath("//textarea[contains(@aria-label, 'Add a comment')]").send_keys(message)
     time.sleep(2)
     driver.find_element_by_xpath("//button[contains(text(), 'Post')]").click()
     time.sleep(5)
-    driver.save_screenshot(f"screenshot-{account_id}-{datetime.datetime.now()}.png")
+    driver.save_screenshot(f"screenshots/screenshot-{account_id}-{datetime.datetime.now()}.png")
     driver.close()
